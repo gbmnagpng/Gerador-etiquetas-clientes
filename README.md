@@ -28,8 +28,8 @@ Before you begin, make sure you have the following installed on your machine:
 ### 1. Clone or Download the Repository
 
 If you are using Git:
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-cd YOUR-REPOSITORY
+git clone https://github.com/gbmnagpng/Gerador-etiquetas-clientes.git
+cd Gerador-etiquetas-clientes
 
 (Or simply download the .zip archive via the Code > Download ZIP button on GitHub and extract the folder).
 
