@@ -93,7 +93,7 @@ def desenhar_etiqueta(c: canvas.Canvas, dados: dict, largura, altura, origem_x=0
     c.translate(origem_x, origem_y)
 
     margem = largura * 0.018
-    raio_ext = largura * 0.028
+    raio_ext = 0
 
     TAM_LABEL_HEADER = altura * 0.038
     TAM_HERO = altura * 0.100
@@ -131,28 +131,29 @@ def desenhar_etiqueta(c: canvas.Canvas, dados: dict, largura, altura, origem_x=0
     p.curveTo(x1, y_header_top, x1, y_header_top, x1, y_header_top - r)
     p.lineTo(x1, y_header_bottom)
     p.close()
-    c.setFillColor(NAVY)
+    c.setFillColor(HexColor(config.COR_FUNDO_APP))
     c.drawPath(p, fill=1, stroke=0)
 
     icone_tam = h_header * 0.62
     icone_x = x0 + largura_util_total * 0.025
     icone_y = y_header_bottom + (h_header - icone_tam) / 2
-    icons.icone_pacote(c, icone_x, icone_y, icone_tam, cor_fundo=None, cor_icone=config.COR_BRANCO)
+    icons.icone_pacote(c, icone_x, icone_y, icone_tam, cor_fundo=None, cor_icone=config.COR_NAVY)
 
     label_x = icone_x + icone_tam + largura_util_total * 0.025
-    c.setFillColor(BRANCO)
+    c.setFillColor(NAVY)
     c.setFont(config.FONTE_PDF_BOLD, TAM_LABEL_HEADER)
     meio_header_y = y_header_bottom + h_header / 2
     c.drawString(label_x, meio_header_y - h_header * 0.07, "PEDIDO Nº")
 
     divisor_x = label_x + largura_util_total * 0.18
-    c.setStrokeColor(BRANCO)
+    c.setStrokeColor(NAVY)
     c.setLineWidth(1)
     c.line(divisor_x, y_header_bottom + h_header * 0.18, divisor_x, y_header_top - h_header * 0.18)
 
     pedido_txt = dados.get("pedido") or "-"
     largura_pedido_disp = (x1 - (divisor_x + largura_util_total * 0.02)) * 0.97
     tam_pedido = _fonte_ajustada(c, pedido_txt, config.FONTE_PDF_BOLD, TAM_HERO, largura_pedido_disp, tamanho_minimo=10)
+    c.setFillColor(NAVY)
     c.setFont(config.FONTE_PDF_BOLD, tam_pedido)
     c.drawString(divisor_x + largura_util_total * 0.02, meio_header_y - h_header * 0.16, pedido_txt)
 
@@ -187,7 +188,7 @@ def desenhar_etiqueta(c: canvas.Canvas, dados: dict, largura, altura, origem_x=0
     ic_y = y_linha1 + (h_row - tamanho_box_icone) / 2
     
     # Cliente
-    icons.icone_pessoa(c, x0 + caixa_margem, ic_y, tamanho_box_icone, cor_fundo=config.COR_NAVY, cor_icone=config.COR_BRANCO)
+    icons.icone_pessoa(c, x0 + caixa_margem, ic_y, tamanho_box_icone, cor_fundo=None, cor_icone=config.COR_NAVY)
     texto_x = x0 + caixa_margem + tamanho_box_icone + (largura_util * 0.02)
     c.setFillColor(NAVY)
     c.setFont(config.FONTE_PDF_BOLD, TAM_LABEL)
@@ -206,7 +207,7 @@ def desenhar_etiqueta(c: canvas.Canvas, dados: dict, largura, altura, origem_x=0
 
     # Cidade
     ic2_x = meio_x + (largura_util * 0.025)
-    icons.icone_pin(c, ic2_x, ic_y, tamanho_box_icone, cor_fundo=config.COR_NAVY, cor_icone=config.COR_BRANCO)
+    icons.icone_pin(c, ic2_x, ic_y, tamanho_box_icone, cor_fundo=None, cor_icone=config.COR_NAVY)
     texto2_x = ic2_x + tamanho_box_icone + (largura_util * 0.02)
     c.setFillColor(NAVY)
     c.setFont(config.FONTE_PDF_BOLD, TAM_LABEL)
@@ -221,14 +222,8 @@ def desenhar_etiqueta(c: canvas.Canvas, dados: dict, largura, altura, origem_x=0
     # --- LINHA 2: PRODUTO ---
     y_linha2 = y_linha1 - h_row
     ic_y = y_linha2 + (h_row - tamanho_box_icone) / 2
-    c.setFillColor(NAVY)
-    c.roundRect(x0 + caixa_margem, ic_y, tamanho_box_icone, tamanho_box_icone, tamanho_box_icone * 0.22, fill=1, stroke=0)
-    icons.icone_produto(c, x0 + caixa_margem, ic_y, tamanho_box_icone, cor_fundo=None, cor_icone=config.COR_BRANCO)
-    
-    c.setStrokeColor(NAVY)
-    c.setLineWidth(0.9)
-    c.roundRect(caixa_x, y_linha2 + box_padding_y, caixa_w, box_h, raio_ext * 0.5, fill=0, stroke=1)
-    
+    icons.icone_produto(c, x0 + caixa_margem, ic_y, tamanho_box_icone, cor_fundo=None, cor_icone=config.COR_NAVY)
+
     centro_caixa_x = caixa_x + caixa_w / 2
     c.setFillColor(NAVY)
     c.setFont(config.FONTE_PDF_BOLD, TAM_LABEL)
@@ -244,13 +239,7 @@ def desenhar_etiqueta(c: canvas.Canvas, dados: dict, largura, altura, origem_x=0
     # --- LINHA 3: UNIDADES / ÁREA ---
     y_linha3 = y_linha2 - h_row
     ic_y = y_linha3 + (h_row - tamanho_box_icone) / 2
-    c.setFillColor(NAVY)
-    c.roundRect(x0 + caixa_margem, ic_y, tamanho_box_icone, tamanho_box_icone, tamanho_box_icone * 0.22, fill=1, stroke=0)
-    icons.icone_caixa_aberta(c, x0 + caixa_margem, ic_y, tamanho_box_icone, cor_fundo=None, cor_icone=config.COR_BRANCO)
-    
-    c.setStrokeColor(NAVY)
-    c.setLineWidth(0.9)
-    c.roundRect(caixa_x, y_linha3 + box_padding_y, caixa_w, box_h, raio_ext * 0.5, fill=0, stroke=1)
+    icons.icone_caixa_aberta(c, x0 + caixa_margem, ic_y, tamanho_box_icone, cor_fundo=None, cor_icone=config.COR_NAVY)
 
     unidades_str = formatar_unidades(dados.get("unidades"))
     area_str = formatar_metros(dados.get("metros"))
@@ -279,13 +268,7 @@ def desenhar_etiqueta(c: canvas.Canvas, dados: dict, largura, altura, origem_x=0
     # --- LINHA 4: OBSERVAÇÃO ---
     y_linha4 = y_linha3 - h_row
     ic_y = y_linha4 + (h_row - tamanho_box_icone) / 2
-    c.setFillColor(NAVY)
-    c.roundRect(x0 + caixa_margem, ic_y, tamanho_box_icone, tamanho_box_icone, tamanho_box_icone * 0.22, fill=1, stroke=0)
-    icons.icone_clipboard(c, x0 + caixa_margem, ic_y, tamanho_box_icone, cor_fundo=None, cor_icone=config.COR_BRANCO)
-    
-    c.setStrokeColor(NAVY)
-    c.setLineWidth(0.9)
-    c.roundRect(caixa_x, y_linha4 + box_padding_y, caixa_w, box_h, raio_ext * 0.5, fill=0, stroke=1)
+    icons.icone_clipboard(c, x0 + caixa_margem, ic_y, tamanho_box_icone, cor_fundo=None, cor_icone=config.COR_NAVY)
 
     c.setFillColor(NAVY)
     c.setFont(config.FONTE_PDF_BOLD, TAM_LABEL)
