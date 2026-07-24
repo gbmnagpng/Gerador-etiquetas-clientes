@@ -1,0 +1,13 @@
+customtkinter>=5.2.0
+reportlab>=4.0.0
+pillow>=10.0.0
+
+# Impressão nativa e silenciosa no Windows (recomendado).
+# Sem estas duas dependências, o programa tenta imprimir abrindo o
+# leitor de PDF padrão do sistema, o que é menos confiável.
+pywin32>=306; platform_system == "Windows"
+pymupdf>=1.23.0; platform_system == "Windows"
+
+# Observação: o QR code e o código de barras da etiqueta são desenhados
+# 100% em vetor pelo próprio ReportLab (reportlab.graphics.barcode),
+# então não é preciso instalar "qrcode" nem "python-barcode".
