@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Gerador de Etiquetas
-Comment=Gerar e imprimir etiquetas de pedido
-Exec=__APP_DIR__/dist/main
-Icon=__APP_DIR__/assets/icons/icon.png
-Terminal=false
-Categories=Office;
